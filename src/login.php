@@ -1,5 +1,23 @@
+<?
+include_once 'db.php';
 
+session_start();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $db_users = mysqli_query($connection, "SELECT * FROM users");
+    $users = mysqli_fetch_all($db_users, 1);
+    foreach ($users as $user_data) {
+        if (in_array($_POST["login"], $user_data) == TRUE && in_array(md5($_POST["password"]), $user_data) == TRUE) {
+            $_SESSION["is_login"] = 1;
+            header('Location: /add_page.php');
+        }
+    }
+    if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== 1) {
+        header('Location: /register.php');
+    }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

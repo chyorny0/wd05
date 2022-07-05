@@ -1,5 +1,18 @@
+<?
+include_once 'db.php';
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $login = $_POST["login"];
+    $password = md5($_POST["password"]);;
+    $res = mysqli_query($connection, "INSERT INTO users (login,password) VALUES ('$login','$password')");
+    if ($res == 1) {
+        echo "Новый пользователь был успешно зарегестрирован";
+    } else {
+        echo "Что-то пошло не так";
+    }
+}
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
