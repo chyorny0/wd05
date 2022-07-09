@@ -1,5 +1,24 @@
+<?
+include_once "db.php";
 
+session_start();
 
+if (!isset($_SESSION["is_login"]) || $_SESSION["is_login"] !== 1) {
+    header('Location: /login.php ');
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title = $_POST["title"];
+    $content = $_POST["content"];
+    $res = mysqli_query($connection, "INSERT INTO posts (title, content) VALUES ('$title', '$content');");
+    if ($res == 1) {
+        echo "Новая запись была успешно добавлена";
+    } else {
+        echo "Что-то пошло не так";
+    }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
